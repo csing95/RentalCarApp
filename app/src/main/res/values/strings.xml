@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Rental Car App</string>
+    <string name="title">Bobcat Car Rental</string>
+    <string name="nextButton">Cars</string>
+    <string name="welcome">Please tap the button to see our available rentals</string>
+    <string name="numOfDays">Number of Days</string>
+    <string name="calc">Calculate</string>
+    <string name="website">Go to Website</string>
+</resources>
