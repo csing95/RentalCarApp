@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import java.text.DecimalFormat;
 public class Car_Info extends AppCompatActivity {
 
     int intId;
+    int intImg;
     double dblCost;
     String strURL;
     String strName;
@@ -30,6 +32,7 @@ public class Car_Info extends AppCompatActivity {
         SharedPreferences sharedPref2 = PreferenceManager.getDefaultSharedPreferences(this);
 
         intId = sharedPref2.getInt("id", 0);
+        intImg = sharedPref2.getInt("img", 0);
         dblCost = sharedPref2.getFloat("cost", 0);
         strURL = sharedPref2.getString("url", "");
         strName = sharedPref2.getString("name", "");
@@ -42,6 +45,8 @@ public class Car_Info extends AppCompatActivity {
         TextView txtCarBrand = findViewById(R.id.txtCarBrand);
         TextView txtCarName = findViewById(R.id.txtCarName);
         TextView txtCarCostPerDayLabel = findViewById(R.id.txtCostPerDay);
+        ImageView imgCarImage = findViewById(R.id.imgCarImage);
+        imgCarImage.setImageResource(intImg);
 
         //Data conversions
         String convertedID = Integer.toString(intId);
@@ -53,7 +58,6 @@ public class Car_Info extends AppCompatActivity {
         txtCarBrand.setText("Make: " + strBrand);
         txtCarName.setText("Model: " + strName);
         txtCarCostPerDayLabel.setText("Cost per day: " + convertedCost);
-
 
         if (strURL.equals("")){
             btnGoToWebsite.setEnabled(false);
