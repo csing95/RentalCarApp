@@ -2,7 +2,6 @@ package edu.txstate.cas388.rentalcarapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ public class Car_Info extends AppCompatActivity {
     int intId;
     int intImg;
     double dblCost;
-    String strURL;
+    String strColor;
     String strName;
     String strBrand;
 
@@ -34,22 +33,35 @@ public class Car_Info extends AppCompatActivity {
         intId = sharedPref2.getInt("id", 0);
         intImg = sharedPref2.getInt("img", 0);
         dblCost = sharedPref2.getFloat("cost", 0);
-        strURL = sharedPref2.getString("url", "");
+        strColor = sharedPref2.getString("color", "");
         strName = sharedPref2.getString("name", "");
         strBrand = sharedPref2.getString("brand", "");
 
         Button btnCostCalculation = findViewById(R.id.btnCalculateCost);
-        final Button btnGoToWebsite = findViewById(R.id.btnGoToWebsite);
+        final Button btnUpdate = findViewById(R.id.btnUpdate);
 
         TextView txtCarID = findViewById(R.id.txtCarID);
         TextView txtCarBrand = findViewById(R.id.txtCarBrand);
         TextView txtCarName = findViewById(R.id.txtCarName);
+        TextView txtCarColor = findViewById(R.id.txtCarColor);
         TextView txtCarCostPerDayLabel = findViewById(R.id.txtCostPerDay);
         ImageView imgCarImage = findViewById(R.id.imgCarImage);
-        imgCarImage.setImageResource(intImg);
+        //imgCarImage.setImageResource(intImg);
 
         //Data conversions
         String convertedID = Integer.toString(intId);
+
+        if (intId==101){
+            imgCarImage.setImageResource(R.drawable.pic1);
+        } else if (intId==102) {
+            imgCarImage.setImageResource(R.drawable.pic2);
+        } else if (intId==103) {
+            imgCarImage.setImageResource(R.drawable.pic3);
+        } else if (intId==104) {
+            imgCarImage.setImageResource(R.drawable.pic4);
+        } else if (intId==105) {
+            imgCarImage.setImageResource(R.drawable.pic5);
+        }
 
         DecimalFormat currency = new DecimalFormat("$###,###.00");
         String convertedCost = currency.format(dblCost);
@@ -57,19 +69,19 @@ public class Car_Info extends AppCompatActivity {
         txtCarID.setText("Car ID: " + convertedID);
         txtCarBrand.setText("Make: " + strBrand);
         txtCarName.setText("Model: " + strName);
+        txtCarColor.setText("Color: " + strColor);
         txtCarCostPerDayLabel.setText("Cost per day: " + convertedCost);
 
-        if (strURL.equals("")){
-            btnGoToWebsite.setEnabled(false);
-        }
 
-        btnGoToWebsite.setOnClickListener(new View.OnClickListener() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btnGoToWebsite.isEnabled()){
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(strURL)));
+                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(strURL))); //This is if you want to go to a website. Leaving this here for studying purposes
 
-                }
+                Intent intent = new Intent(Car_Info.this, UpdateRentalCost.class);
+                intent.putExtra("id",intId);
+                startActivity(intent);
+
             }
         });
 
@@ -78,9 +90,14 @@ public class Car_Info extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int intDays = Integer.parseInt(txtNumberOfDays.getText().toString());
-                double dblTotalCost = dblCost * intDays;
-                DecimalFormat currency = new DecimalFormat("$###,###.00");
-                Toast.makeText(Car_Info.this, "Total Cost: " + currency.format(dblTotalCost), Toast.LENGTH_LONG).show();
+                if (intDays<30) {
+                    double dblTotalCost = dblCost * intDays;
+                    DecimalFormat currency = new DecimalFormat("$###,###.00");
+                    Toast.makeText(Car_Info.this, "Total Cost: " + currency.format(dblTotalCost), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Car_Info.this, "Rental requested longer than 30 days, please call 512-777-2222", Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });

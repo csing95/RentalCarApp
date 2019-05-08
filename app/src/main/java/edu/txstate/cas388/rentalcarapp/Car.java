@@ -1,5 +1,7 @@
 package edu.txstate.cas388.rentalcarapp;
 
+import org.json.JSONObject;
+
 public class Car {
 
     private int carID;
@@ -7,9 +9,23 @@ public class Car {
     private String carBrand;
     private double costPerDay;
     private int carImage;
-    private String carUrl;
+    private String carColor;
 
     public Car() {
+    }
+
+    public Car(JSONObject object) {
+
+        try {
+            this.carID = object.getInt("Id");
+            this.carName = object.getString("Name");
+            this.carBrand = object.getString("Brand");
+            this.costPerDay = object.getDouble("Cost");
+            this.carColor = object.getString("Color");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Car(int carID, String carName, String carBrand, double costPerDay, int carImage) {
@@ -26,15 +42,15 @@ public class Car {
         this.carBrand = carBrand;
         this.costPerDay = costPerDay;
         this.carImage = carImage;
-        this.carUrl = carUrl;
+        this.carColor = carUrl;
     }
 
-    public String getCarUrl() {
-        return carUrl;
+    public String getCarColor() {
+        return carColor;
     }
 
-    public void setCarUrl(String carUrl) {
-        this.carUrl = carUrl;
+    public void setCarColor(String carColor) {
+        this.carColor = carColor;
     }
 
     public int getCarID() {
@@ -75,5 +91,10 @@ public class Car {
 
     public void setCarImage(int carImage) {
         this.carImage = carImage;
+    }
+
+    @Override
+    public String toString() {
+        return this.carName + ", " + this.carID;
     }
 }

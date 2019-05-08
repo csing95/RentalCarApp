@@ -5,5 +5,7 @@
     <string name="welcome">Please tap the button to see our available rentals</string>
     <string name="numOfDays">Number of Days</string>
     <string name="calc">Calculate</string>
-    <string name="website">Go to Website</string>
+    <string name="update">Update Cost</string>
+    <string name="updateCost">Enter New Cost</string>
+    <string name="home">Home</string>
 </resources>
